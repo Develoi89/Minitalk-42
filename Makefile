@@ -15,7 +15,7 @@ clean:
 
 fclean: clean
 	make fclean -C libft
-	rm -f $(NAME) a.out libft.a
+	rm -f $(NAME) *.out libft.a
 
 all: $(NAME)
 
@@ -23,8 +23,10 @@ re: fclean all
 
 server:
 	CC server.c libft/*.c && ./a.out
+	mv a.out server.out
 
 client:
 	CC client.c libft/*.c
+	mv a.out client.out
 
 .PHONY : client server re all fclean clean 

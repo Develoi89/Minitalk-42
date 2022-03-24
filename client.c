@@ -6,37 +6,35 @@
 /*   By: ealonso- <ealonso-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 17:44:39 by ealonso-          #+#    #+#             */
-/*   Updated: 2022/03/23 19:26:05 by ealonso-         ###   ########.fr       */
+/*   Updated: 2022/03/24 17:52:02 by ealonso-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
+#include <signal.h>
 
-char	*to_binary(char *str)
+void	ft_send_it(int pid, char *str)
 {
 	int		i;
-	char	digit;
-	char	*temp;
-	char	*res;
+	int		j;
+	char	c;
 
-	digit = 1;
-	i = 0;
-	res = ft_strdup("");
-	while (str[i] != '\0')
+	i = 8;
+	j = 0;
+	while (str[j])
 	{
-		digit = str[i];
-		while (digit > 0)
+		c = str[j];
+		while (i)
 		{
-			temp[0] = digit % 2;
-			temp[1] = '\0';
-			res = ft_strjoin(res, temp);
-			digit /= 2;
+			if (c >> i & 1)
+				kill(pid, SIGUSR2);
+			else
+				kill(pid, SIGUSR1);
+			usleep(100);
+			i--;
 		}
-		temp = ft_strdup("");
-		i++;
+		j++;
 	}
-	ft_printf("prueba:%s", res);
-	return (res);
 }
 
 int	main(int argc, char **argv)
@@ -49,5 +47,5 @@ int	main(int argc, char **argv)
 		ft_printf("invalid PID");
 	if (argc != 3)
 		ft_printf("the number of arguments is invalid.");
-	bin = to_binary(argv[2]);
+	ft_send_it(pid, argv[2]);
 }
