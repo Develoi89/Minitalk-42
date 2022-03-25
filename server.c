@@ -6,14 +6,14 @@
 /*   By: ealonso- <ealonso-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 16:46:17 by ealonso-          #+#    #+#             */
-/*   Updated: 2022/03/25 20:16:57 by ealonso-         ###   ########.fr       */
+/*   Updated: 2022/03/25 21:40:02 by ealonso-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
 #include <signal.h>
 
-int	ft_to_dec(char *byte)
+void	ft_to_dec(char *byte)
 {
 	int		i;
 	int		dec;
@@ -34,7 +34,7 @@ int	ft_to_dec(char *byte)
 void	ft_to_rec(int bit)
 {
 	static char	byte[9];
-	static int	pos = 0;
+	static int	pos;
 
 	byte[8] = '\0';
 	if (bit == SIGUSR1)
@@ -42,7 +42,10 @@ void	ft_to_rec(int bit)
 	else
 		byte[pos] = '1';
 	if (pos == 7)
+	{
 		ft_to_dec(byte);
+		pos = -1;
+	}
 	pos++;
 }
 

@@ -6,47 +6,49 @@
 /*   By: ealonso- <ealonso-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 17:44:39 by ealonso-          #+#    #+#             */
-/*   Updated: 2022/03/25 20:17:00 by ealonso-         ###   ########.fr       */
+/*   Updated: 2022/03/25 21:41:57 by ealonso-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
 #include <signal.h>
 
-void	ft_send_it(int pid, char *str)
+void	ft_enviar(int pid, char c)
 {
-	int		i;
-	int		j;
-	char	c;
-
+	int i;
+	int bit;
 	i = 7;
-	j = 0;
-	while (str[j])
+	while (i >= 0)
 	{
-		c = str[j];
-		while (i >= 0)
-		{
-			if (c >> i & 1)
-				kill(pid, SIGUSR2);
-			else
-				kill(pid, SIGUSR1);
-			--i;
-			usleep(150);
-		}
-		j++;
+		bit = (c >> i) & 1;
+		if (bit == 0)
+			kill(pid, SIGUSR1);
+		else
+			kill(pid, SIGUSR2);
+		--i;
+		usleep(150);
 	}
 }
 
-int	main(int argc, char **argv)
+void message_char(int pid, char *str)
 {
-	int		pid;
-	char	*bin;
+	int i;
+	i = 0;
+	while (str[i])
+	{
+		ft_enviar(pid, str[i]);
+		i++;
+	}
+}
 
+int main (int argc, char **argv){
+	int pid;
+	if (argc < 3)
+		ft_putstr("PIDERROR");
+	if (argc > 3)
+		ft_putstr("ARGERROR");
 	pid = ft_atoi(argv[1]);
-	if (ft_isdigit(pid) == 1)
-		ft_printf("invalid PID");
-	if (argc != 3)
-		ft_printf("the number of arguments is invalid.");
-	ft_send_it(pid, argv[2]);
+	message_char(pid, argv[2]);
 	return (0);
+
 }
