@@ -6,7 +6,7 @@
 /*   By: ealonso- <ealonso-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 17:44:39 by ealonso-          #+#    #+#             */
-/*   Updated: 2022/03/24 17:52:02 by ealonso-         ###   ########.fr       */
+/*   Updated: 2022/03/25 18:34:43 by ealonso-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,19 @@ void	ft_send_it(int pid, char *str)
 	int		j;
 	char	c;
 
-	i = 8;
+	i = 7;
 	j = 0;
 	while (str[j])
 	{
 		c = str[j];
-		while (i)
+		while (i >= 0)
 		{
 			if (c >> i & 1)
 				kill(pid, SIGUSR2);
 			else
 				kill(pid, SIGUSR1);
-			usleep(100);
-			i--;
+			--i;
+			usleep(150);
 		}
 		j++;
 	}
