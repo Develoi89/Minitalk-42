@@ -6,16 +6,29 @@
 /*   By: ealonso- <ealonso-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 16:46:17 by ealonso-          #+#    #+#             */
-/*   Updated: 2022/03/25 19:32:55 by ealonso-         ###   ########.fr       */
+/*   Updated: 2022/03/25 20:16:57 by ealonso-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
 #include <signal.h>
 
-void	ft_to_dec(char *byte)
+int	ft_to_dec(char *byte)
 {
-	write(1, byte, 8);
+	int		i;
+	int		dec;
+	char	c;
+
+	i = 0;
+	dec = 128;
+	c = 0;
+	while (byte[i])
+	{
+		c += dec * (byte[i] - '0');
+		dec /= 2;
+		i++;
+	}
+	write (1, &c, 1);
 }
 
 void	ft_to_rec(int bit)
@@ -25,19 +38,11 @@ void	ft_to_rec(int bit)
 
 	byte[8] = '\0';
 	if (bit == SIGUSR1)
-	{
 		byte[pos] = '0';
-		write(1, "0", 1);
-	}
 	else
-	{
 		byte[pos] = '1';
-		write(1, "1", 1);
-	}
 	if (pos == 7)
-	{
 		ft_to_dec(byte);
-	}
 	pos++;
 }
 
@@ -53,4 +58,5 @@ int	main(void)
 		signal(SIGUSR2, ft_to_rec);
 		pause();
 	}
+	return (0);
 }

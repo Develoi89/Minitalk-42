@@ -6,7 +6,7 @@
 /*   By: ealonso- <ealonso-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 17:44:39 by ealonso-          #+#    #+#             */
-/*   Updated: 2022/03/25 18:34:43 by ealonso-         ###   ########.fr       */
+/*   Updated: 2022/03/25 20:17:00 by ealonso-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,5 @@ int	main(int argc, char **argv)
 	if (argc != 3)
 		ft_printf("the number of arguments is invalid.");
 	ft_send_it(pid, argv[2]);
+	return (0);
 }
