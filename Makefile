@@ -15,18 +15,26 @@ clean:
 
 fclean: clean
 	make fclean -C libft
-	rm -f $(NAME) *.out libft.a
+	rm -f $(NAME) client server client_bonus server_bonus libft.a
 
 all: $(NAME)
 
 re: fclean all
 
 server:
-	CC server.c libft/*.c && ./a.out
-	mv a.out server.out
+	CC server.c libft/*.c
+	mv a.out server
 
 client:
 	CC client.c libft/*.c
-	mv a.out client.out
+	mv a.out client
+
+server_bonus:
+	CC server_bonus.c libft/*.c
+	mv a.out server
+
+client_bonus:
+	CC client_bonus.c libft/*.c
+	mv a.out client
 
 .PHONY : client server re all fclean clean 
